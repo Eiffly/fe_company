@@ -1,0 +1,47 @@
+// 发射：5 4 3 2 1
+// 到达：1 5 3 4 2 输出2，表示有两个粒子的速度发生了变化
+
+// 到达：4 3 2 1 5 如果输出4，表示只考虑加速的情况; 如果输出1，表示5的速度变慢了
+
+let s = [5, 4, 3, 2, 1];
+let r = [1, 5, 3, 4, 2];
+// let r = [4, 3, 2, 1, 5];
+
+// 思路一：可以理解为求公共最长子序列的问题
+//#region
+n = r.length;
+let dp = new Array(n + 1).fill(0).map((v) => new Array(n + 1).fill(0));
+for (let i = 1; i <= n; i++) {
+  for (let j = 1; j <= n; j++) {
+    if (s[i - 1] == r[j - 1]) {
+      dp[i][j] = dp[i - 1][j - 1] + 1;
+    } else {
+      dp[i][j] = Math.max(dp[i][j - 1], dp[i - 1][j]);
+    }
+  }
+}
+console.log(n - dp[n][n]);
+//#endregion
+
+// 思路二：比较相对顺序
+//#region
+// let map = {};
+// for (let i = 0; i < s.length; i++) {
+//   map[s[i]] = i;
+// }
+
+// let addSpeed = 0;
+// for (let i = 1; i < r.length; i++) {
+//   if (map[r[i - 1]] - map[r[i]] !== r[i - 1] - r[i]) {
+//      addSpeed = map[r[i - 1]] - map[r[i]];
+//   } else {
+//   }
+// }
+// // 比较首尾部
+// if (map[r[0]] > map[r[r.length - 1]]) {
+//   addSpeed++;
+// }
+// console.log(addSpeed);
+//#endregion
+
+

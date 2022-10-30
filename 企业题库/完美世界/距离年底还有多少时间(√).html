@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <span id="nian">xx</span>年还剩 <span id="tian">xx</span>天
+      <span id="shi">xx</span>时 <span id="fen">xx</span>分
+      <span id="miao">xx</span>秒
+    </div>
+    <script>
+      function interval() {
+        let nian = document.getElementById("nian");
+        let tian = document.getElementById("tian");
+        let shi = document.getElementById("shi");
+        let fen = document.getElementById("fen");
+        let miao = document.getElementById("miao");
+
+        let now = new Date();
+        let end = new Date("2023/01/01 00:00:00");
+        // console.log(now.getFullYear());
+
+        nian.innerText = now.getFullYear();
+        tian.innerText = parseInt(
+          (end.getTime() - now.getTime()) / (60 * 60 * 24 * 1000)
+        );
+        shi.innerText = parseInt(
+          ((end.getTime() - now.getTime()) / (60 * 60 * 1000)) % 24
+        );
+        fen.innerText = parseInt(
+          ((end.getTime() - now.getTime()) / (60 * 1000)) % 60
+        );
+        miao.innerText = parseInt(
+          ((end.getTime() - now.getTime()) / 1000) % 60
+        );
+      }
+
+      setInterval(() => {
+        interval();
+      }, 1000);
+    </script>
+  </body>
+</html>

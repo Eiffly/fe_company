@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style type="text/css">
+      * {
+        margin: 0px;
+        padding: 0px;
+      }
+      .loop-pie {
+        position: relative;
+        width: 200px;
+        height: 200px;
+        margin: 60px;
+      }
+      .loop-pie-line {
+        position: absolute;
+        width: 50%;
+        height: 100%;
+        top: 0;
+        overflow: hidden;
+      }
+      .loop-pie-l {
+        top: 0px;
+        left: 0px;
+      }
+      .loop-pie-r {
+        top: 0px;
+        transform: rotate(180deg);
+        right: 0px;
+      }
+
+      /* 两个半圆 */
+      .loop-pie-c {
+        width: 200%;
+        height: 100%;
+        border: 4px solid transparent;
+        border-radius: 50%;
+        position: absolute;
+        box-sizing: border-box;
+        top: 0;
+        transform: rotate(-45deg);
+      }
+      .loop-pie-rm {
+        border-top: 10px solid #baedee;
+        border-left: 10px solid #baedee;
+        border-bottom: 10px solid #1ac4c7;
+        border-right: 10px solid #1ac4c7;
+      }
+      .loop-pie-lm {
+        border-top: 10px solid #baedee;
+        border-left: 10px solid #baedee;
+        border-bottom: 10px solid #1ac4c7;
+        border-right: 10px solid #1ac4c7;
+      }
+      /* 下面的样式不用管 */
+      .percent-number {
+        margin-left: 60px;
+        width: 200px;
+        text-align: center;
+      }
+      .percent-number input {
+        width: 60px;
+        font-size: 18px;
+      }
+      #submit {
+        font-size: 15px;
+        margin-left: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <section id="magnifier"></section>
+
+    <script>
+      const sec = document.getElementById("magnifier");
+      var magnifier = {
+        init(param) {
+          const el = param.el;
+          if (!el) return;
+          this.createElement(el);
+          this.initEvent();
+          this.loadPercent();
+        },
+        // 创建环形进度条
+        createElement(el) {
+          const loopPie = document.createElement("div");
+          loopPie.className = "loop-pie";
+          // 右半圆
+          const rightLoopPie = document.createElement("div");
+          rightLoopPie.className = "loop-pie-line loop-pie-r";
+          const rightMask = document.createElement("div");
+          rightMask.className = "loop-pie-c loop-pie-rm";
+          rightMask.id = "loop-rc";
+          rightLoopPie.appendChild(rightMask);
+          // 左半圆
+          const leftLoopPie = document.createElement("div");
+          leftLoopPie.className = "loop-pie-line loop-pie-l";
+          const leftMask = document.createElement("div");
+          leftMask.className = "loop-pie-c loop-pie-lm";
+          leftMask.id = "loop-lc";
+          leftLoopPie.appendChild(leftMask);
+
+          loopPie.appendChild(rightLoopPie);
+          loopPie.appendChild(leftLoopPie);
+
+          // 百分比输入框
+          const percent = document.createElement("div");
+          percent.className = "percent-number";
+          const input = document.createElement("input");
+          input.type = "number";
+          input.value = 25;
+          const button = document.createElement("button");
+          button.innerText = "确定";
+          button.id = "submit";
+          percent.appendChild(input);
+          percent.appendChild(button);
+
+          el.appendChild(loopPie);
+          el.appendChild(percent);
+        },
+        // 点击
+        initEvent() {
+          // TODO：获取id=submit的节点
+          const submit = document.getElementById("submit");
+          let _this = this;
+          // TODO：给submit的按钮添加点击事件，当被点击时调用 loadPercent() 方法
+          submit.onclick = function () {
+            _this.loadPercent();
+          };
+        },
+        // 获取输入的数据
+        getPercenNumber() {
+          const input = document.querySelector(".percent-number input");
+          // TODO：将输入框中的值保留四舍五入取整
+          // TODO：将输入框框的值置为合理区间范围
+          let num = input.value;
+          if (num > 100) {
+            num = 100;
+          } else if (num < 0) {
+            num = 0;
+          } else {
+            num = Math.round(num);
+          }
+          input.value = num;
+          return num;
+        },
+        // DOM展示
+        loadPercent() {
+          // TODO：计算左半圆部分和右半圆部分旋转的角度
+          // 右半圆部分旋转角度
+          let rotateRight = -45;
+          // 左半圆部分旋转角度
+          let rotateLeft = -45;
+          let degree = this.getPercenNumber();
+          if (degree <= 50) {
+            rotateRight += (degree / 100) * 360;
+          } else {
+            rotateRight += 180;
+            rotateLeft += (degree / 100) * 360 - 180;
+          }
+          const lc = document.querySelector("#loop-lc");
+          lc.style.transform = `rotate(${rotateLeft}deg)`;
+          const rc = document.querySelector("#loop-rc");
+          rc.style.transform = `rotate(${rotateRight}deg)`;
+        },
+      };
+      magnifier.init({
+        // TODO: 请获取id=magnifier的节点
+        el: sec,
+      });
+    </script>
+  </body>
+</html>

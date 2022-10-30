@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="content"></div>
+    <script>
+      // 数据
+      let data = [
+        {
+          id: 1,
+          name: "目录1",
+          parentId: 0,
+        },
+        {
+          id: 2,
+          name: "目录1-1",
+          parentId: 1,
+        },
+        {
+          id: 3,
+          name: "目录1-2",
+          parentId: 1,
+        },
+        {
+          id: 4,
+          name: "目录1-3",
+          parentId: 1,
+        },
+        {
+          id: 5,
+          name: "目录1-1-1",
+          parentId: 2,
+        },
+        {
+          id: 6,
+          name: "目录1-1-2",
+          parentId: 2,
+        },
+        {
+          id: 7,
+          name: "目录1-1-2-1",
+          parentId: 6,
+        },
+        {
+          id: 8,
+          name: "目录2",
+          parentId: 0,
+        },
+        {
+          id: 9,
+          name: "目录2-1",
+          parentId: 8,
+        },
+        {
+          id: 10,
+          name: "目录2-2",
+          parentId: 8,
+        },
+        {
+          id: 11,
+          name: "目录2-3",
+          parentId: 8,
+        },
+        {
+          id: 13,
+          name: "目录2-1-1",
+          parentId: 9,
+        },
+        {
+          id: 14,
+          name: "目录2-1-2",
+          parentId: 9,
+        },
+        {
+          id: 15,
+          name: "目录2-1-1-1",
+          parentId: 13,
+        },
+      ];
+
+      // 1.创建一个map(每个编号)
+      let map = {};
+      let treeData = [];
+      data.forEach((item) => {
+        map[item.id] = item;
+      });
+      for (const item of data) {
+        //2.是否存在parent
+        let parent = map[item.parentId];
+        if (parent) {
+          if (parent.children || (parent.children = [])) {
+            parent.children.push(item);
+          }
+        } else {
+          treeData.push(item);
+        }
+      }
+      console.log(treeData);
+
+      //3.进行渲染
+      function render(treeData, root) {
+        for (const item of treeData) {
+          let span = document.createElement("span");
+          let summary = document.createElement("summary");
+          let details = document.createElement("details");
+          span.innerHTML = item.name;
+          summary.appendChild(span);
+          details.appendChild(summary);
+          if (item.children?.length) {
+            render(item.children, details);
+          }
+          root.appendChild(details);
+        }
+      }
+      //4.创建元素，执行函数
+      let content = document.getElementById("content");
+      render(treeData, content);
+    </script>
+  </body>
+</html>
