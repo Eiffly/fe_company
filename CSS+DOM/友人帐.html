@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .flink-item {
+        width: 250px;
+        height: 100px;
+        position: relative;
+        margin: 10px;
+        background-color: #fff;
+        border-radius: 10px;
+        float: left;
+        cursor: pointer;
+      }
+      .flink-title {
+        left: 25px;
+        top: 25px;
+        position: absolute;
+      }
+      .flink-title a {
+        font-size: 17px;
+        color: #f1f1f1;
+        line-height: 17px;
+        text-decoration: none;
+        word-break: break-all;
+        outline: 0;
+      }
+      .flink-link {
+        right: 0;
+        bottom: 0;
+        padding: 0 15px 15px;
+        position: absolute;
+        text-align: center;
+      }
+      .flink-link-text {
+        font-size: 12px;
+        color: #f1f1f1;
+      }
+      .flink-link-ico {
+        display: inline-block;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+      }
+
+      .bg-blue {
+        background-color: #6fa3ef !important;
+      }
+      .bg-purple {
+        background-color: #bc99c4 !important;
+      }
+      .bg-green {
+        background-color: #46c47c !important;
+      }
+      .bg-yellow {
+        background-color: #f9bb3c !important;
+      }
+      .bg-red {
+        background-color: #6fa3ef !important;
+      }
+      .bg-orange {
+        background-color: #f68e5f !important;
+      }
+    </style>
+  </head>
+  <body>
+    <ul class="flinks">
+      <li>一元-ONESRC</li>
+      <li>https://www.onesrc.cn/</li>
+      <li>https://cdn.onesrc.cn/uploads/images/favicon.png</li>
+      <li>onesrc.cn</li>
+
+      <li>Baidu</li>
+      <li>https://www.baidu.com/</li>
+      <li>https://www.baidu.com/favicon.ico</li>
+      <li>baidu.com</li>
+
+      <li>一元-ONESRC</li>
+      <li>https://www.onesrc.cn/</li>
+      <li>https://cdn.onesrc.cn/uploads/images/favicon.png</li>
+      <li>onesrc.cn</li>
+
+      <li>一元-ONESRC</li>
+      <li>https://www.onesrc.cn/</li>
+      <li>https://cdn.onesrc.cn/uploads/images/favicon.png</li>
+      <li>onesrc.cn</li>
+    </ul>
+    <script>
+      document.querySelectorAll("ul.flinks").forEach(function (e) {
+        let a = e;
+        if (a) {
+          let ns = a.querySelectorAll("li");
+          let str = '<div style="display:inline-block;">';
+          let bgid = 0;
+          const bgs = [
+            "bg-blue",
+            "bg-purple",
+            "bg-green",
+            "bg-yellow",
+            "bg-red",
+            "bg-orange",
+          ];
+          for (let i = 0; i < ns.length; i += 4) {
+            str += `<div class="flink-item ${
+              bgs[Math.floor(Math.random() * 6)]
+            }"><div class="flink-title"><a href="${
+              ns[i + 1].innerText
+            }"target="_blank"  rel="external nofollow ugc">${
+              ns[i].innerText
+            }</a></div><div class="flink-link"><div class="flink-link-ico" style="background: url(${
+              ns[i + 2].innerText
+            });background-size: 42px auto;"></div><div class="flink-link-text">${
+              ns[i + 3].innerText
+            }</div></div></div>`;
+          }
+          str += `</div>`;
+          let n1 = document.createElement("div");
+          n1.innerHTML = str;
+          a.parentNode.insertBefore(n1, a);
+          a.style = "display: none;";
+        } else {
+          console.log('No such id "flinks"');
+        }
+      });
+      var items = document.getElementsByClassName("flink-item");
+      items = Array.prototype.slice.call(items);
+      //   items.forEach((i) => console.log(i));
+      items.forEach(function (item) {
+        item.onclick = function (event) {
+          let goUrl = this.childNodes[0].childNodes[0].href;
+          location.assign(goUrl);
+        };
+      });
+    </script>
+  </body>
+</html>

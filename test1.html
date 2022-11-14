@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //   const student = {
+      //     name: "floye",
+      //     study() {
+      //       console.log(this);
+      //     },
+      //   };
+      //   const student = new Student("floye");
+      //   student.study(); //"floye"
+      //   const x = student.study;
+      //   x();
+
+      class Student {
+        constructor(name) {
+          this.name = name;
+        }
+        study() {
+          console.log(this.name);
+        }
+      }
+      const student = new Student("floye"); //"floye"
+      student.study();
+      const x = student.study; //this是undefined，报错
+      x();
+    </script>
+  </body>
+</html>
